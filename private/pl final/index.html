@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <link rel="stylesheet" href="/private/jschart/style1.css"> -->
+	<link rel="stylesheet" href="./style2.css">
+
+</head>
+<body>
+    <nav class="navbar background">
+        <ul class="nav-list">
+          <div class="logo"><img src="stock.jpg" alt="logo"></div>
+          <li><a href="/">Home</a></li>
+          <li><a href="/dashboard">Dashboard</a></li>
+          <div class="rightNav">
+		<li><a href="/logout">Logout</a></li>
+		  </div>
+        </ul>
+        <!--<div class="rightNav">
+          <input type="text" name="search" id="search">
+          <button class="btn btn-sm">Search</button>
+        </div>-->
+      </nav>
+	  
+    
+	  <!-- <div class="container">
+	  <p>Protfolio</p></div> -->
+	  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+<style>
+    th{ 
+        color:#fff;
+            }
+	
+</style>
+
+
+<table class="table table-striped">
+    <tr  class="bg-info">
+        <th>Serial No.</th>
+			<th>Date of trade</th>
+			<th>Equity Name</th>
+			<th>Equity Symbol</th>
+			<th>Buy Price</th>
+			<th>Quantity</th>
+			<th>Sell Price</th>
+			<th>Settled</th>
+			<th>Gross Profit/Loss</th>
+			<th>Profit/Loss Percentage</th>
+    </tr>
+
+    <tbody id="myTable">
+        
+    </tbody>
+</table>
+
+<script>
+	const table = document.getElementById("myTable");
+	fetch("/tradePL")
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+		data.map((stock,index)=>{
+			let row = `<tr>
+							<td>${stock.tradeID}</td>
+							<td>${stock.date.substring(0,10)}</td>
+							<td>${stock.equityName}</td>
+							<td>${stock.equitySymbol}</td>
+							<td>${stock.buyPrice}</td>
+							<td>${stock.quantity}</td>
+							<td>${stock.sellPrice === null ? 'NA' : stock.sellPrice}</td>
+							<td>${stock.isSettled == 0 ? 'No':'Yes'}</td>
+							<td>${stock.sellPrice === null ? '0': (stock.sellPrice - stock.buyPrice).toFixed(2)}</td>
+							<td>${stock.sellPrice === null ? '0 %': `${(((stock.sellPrice - stock.buyPrice)/stock.buyPrice)*100).toFixed(2)} %`}</td>
+					  </tr>`
+			table.innerHTML += row
+		})
+	  })
+</script>
+      <SCRIPT language="javascript">
+		
+
+			
+
+		
+		
+
+	</SCRIPT>
+</HEAD>
+<BODY>
+
+	
+	
+
+</BODY>
+</HTML>
+</body>
+</html>
