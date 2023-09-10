@@ -1,0 +1,145 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+<style>
+    th{ 
+        color:#fff;
+            }
+</style>
+
+
+<table class="table table-striped">
+    <tr  class="bg-info">
+        <th>Serial No.</th>
+        <th>Trade ID</th>
+        <th>Equity Name</th>
+		<th>Equity Symbol</th>
+		<th>Buy Price</th>
+		<th>Quantity</th>
+		<th>Sell Price</th>
+		<th>Profit/Loss</th>
+    </tr>
+
+    <tbody id="myTable">
+        
+    </tbody>
+</table>
+
+<script>
+	let myArray = [];
+	setTicks = (symbol, api) => {
+    // https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${symbol}&outputsize=full&apikey=${api}
+    // console.log(lastEvent);
+    
+    // i++;
+    // document.getElementBy    Id('tvchart').innerHTML = '';
+    // const domElement${i} = document.getElementById('tvchart');
+
+  // const chart${i} = LightweightCharts.createChart(domElement, chartProperties);
+  // const candleSeries${i} = chart.addCandlestickSeries();
+    // let domElement = document.getElementById('tvchart');
+    // let chart1 = LightweightCharts.createChart(domElement, chartProperties);
+    // let candleSeries = chart.addCandlestickSeries();
+    let queryURL = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${symbol}&outputsize=full&apikey=${api}`;
+    let equityName, equitySymbol;
+    console.log(queryURL);
+    fetch(queryURL)
+      .then(res => res.json())
+      .then(data => {
+        // console.log(data);
+        let keys = Object.keys(data["Time Series (Daily)"]);
+        equitySymbol = data["Meta Data"]["2. Symbol"];
+        equityName = equitySymbol.replace(".BSE", "");
+        console.log(equitySymbol);
+        let final = [];
+        keys.map((currDate) => {
+          // console.log((parseFloat(data["Time Series (Daily)"][currDate]["1. open"])).toFixed(2));
+          // console.log(data["Time Series (Daily)"][currDate]["1. open"]);
+          let singleCandle = {
+            time: currDate,
+            open: parseFloat(data["Time Series (Daily)"][currDate]["1. open"]).toFixed(2),
+            high: parseFloat(data["Time Series (Daily)"][currDate]["2. high"]).toFixed(2),
+            low: parseFloat(data["Time Series (Daily)"][currDate]["3. low"]).toFixed(2),
+            close: parseFloat(data["Time Series (Daily)"][currDate]["4. close"]).toFixed(2),
+          }
+          final.push(singleCandle);
+        });
+        // const cdata = data.map(d => {
+        //   return {time:d[0]/1000,open:parseFloat(d[1]),high:parseFloat(d[2]),low:parseFloat(d[3]),close:parseFloat(d[4])}
+        // });
+        console.log(final);
+        candleSeries.setData(final.reverse());
+        let domEquitySymbol = document.getElementById("equitySymbol");
+        let domEquityName = document.getElementById("eqityName");
+        domEquitySymbol.setAttribute("value",equitySymbol);
+        domEquityName.setAttribute("value",equityName);
+        // console.log(final[99].close);
+
+        // ["close"]);
+        // console.log(final[99]["close"]);
+        //  const 
+         eventSource = new EventSource(`http://localhost:5001/stock/${final[final.length - 1].close}`);
+          console.log(eventSource);
+          if(lastEvent)
+          {
+            lastEvent.close();
+          }
+          lastEvent = eventSource;
+        function updateMessage(message) {
+          // const list = document.getElementById('messages')
+          // const item = document.createElement('p')
+          // item.textContent = message
+          // list.appendChild(item)
+          console.log(message);
+        }
+
+        eventSource.onmessage = function (event) {
+          console.log(event.data);
+          let newCandle = {
+            time: final[final.length - 1]["time"],
+            open: final[final.length - 1]["open"],
+            high: final[final.length - 1]["high"],
+            low: final[final.length - 1]["low"],
+            close: parseFloat(event.data),
+          }
+          console.log(newCandle);
+
+          // console.log(newCandle);
+          candleSeries.update(newCandle);
+        
+          priceBox.setAttribute("value", event.data);
+
+        }
+
+        eventSource.onerror = function () {
+          console.log('Server closed connection')
+          eventSource.close()
+        }
+      })
+      .catch(err => log(err))
+    // final.reverse();
+    // console.log(final);
+    // return final;
+  }
+	
+	buildTable(myArray)
+
+
+
+	function buildTable(data){
+		var table = document.getElementById('myTable')
+
+		for (var i = 0; i < data.length; i++){
+			var row = `<tr>
+							<td>${data[i].name}</td>
+							<td>${data[i].age}</td>
+							<td>${data[i].birthdate}</td>
+					  </tr>`
+			table.innerHTML += row
+
+
+		}
+	}
+
+</script>
