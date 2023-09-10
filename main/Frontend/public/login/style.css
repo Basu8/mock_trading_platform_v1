@@ -1,0 +1,121 @@
+*{
+    margin: 0;
+    padding: 0;
+    }
+    .logo{
+        width: 20%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .logo img{
+        width: 33%;
+        border: 3px solid white;
+        border-radius: 50px;
+    }
+    .navbar{
+        display: flex;
+    }
+    .nav-list{
+        width: 50;
+        display: flex;
+        align-items: center;
+    }
+    .nav-list li{
+         list-style: none;
+         padding: 26px 30px;
+    }
+    .nav-list li a{
+          text-decoration: none;
+          color: antiquewhite;
+    }
+    .nav-list li a:hover{
+        color: violet;
+  }
+    .rightNav{
+        width: 50%;
+        text-align: right;
+    }
+    #search{
+        padding: 5px;
+        font-size: 17px;
+        border: 2px solid grey;
+        border-radius: 9px;
+    }
+    .background{
+        background: rgba(0, 0, 0, 0.7)url('stocks.jpg');
+        background-size: cover;
+        background-blend-mode: darken;
+    }
+    body{
+        background: url(stocks.jpg) no-repeat center center fixed;
+        background-size: cover; 
+    }
+    .container{ 
+        color: rgb(0, 0, 0);
+        position: absolute;
+        top: 28%;
+        left: 40%;
+        
+    }
+    .container h1{
+        font-family: 'Heebo', sans-serif;
+        width: 50%;
+        display: inline-block;
+        font-size: 38px;
+        border-bottom: 5px solid purple;
+        margin-bottom: 15px;
+        padding: 13px 0;
+        
+    }
+
+    .box{
+        width: 100%; 
+        margin: 22px 0px;
+        border-bottom: 2px solid purple;
+    }
+    .box input{  
+        background: none;
+        width: 75%;
+        padding: 5px 10px;
+        font-size: 20px;
+        border: none;
+        outline:none;
+        color: rgb(48, 78, 141);
+    }
+    .btn{
+        color: white;
+        cursor: pointer;
+        outline: none; 
+        margin: 12px 0;
+        padding: 10px 21px;
+        border: 2px solid purple;
+        border-radius: 10px;
+        font-size: 18px;
+        background: none;
+        font-weight: bold;
+        
+    }
+    .btn-sm{
+        color: white;
+        cursor: pointer;
+        outline: none; 
+        margin: 9px 0;
+        padding: 6px 10px;
+        border: 2px solid rgb(14, 13, 13);
+        border-radius: 8px;
+        font-size: 13px;
+        background: none;
+        font-weight: bold;
+    }
+    .box i{ 
+        width: 25px; 
+        text-align: center;
+    }
+    .btn:hover{
+        opacity: 0.5;
+        color: purple; 
+        background: white; 
+        
+    }
+    

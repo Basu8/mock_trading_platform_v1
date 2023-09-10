@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://kit.fontawesome.com/03bfb37039.js" crossorigin="anonymous"></script>
+  <title>Document</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body style="display: flex;flex-direction: column;">
+  <nav class="navbar background">
+    <ul class="nav-list">
+      <div class="logo">
+        <img src="stock.jpg" alt="logo"></div>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#contact">Contact Us</a></li>
+    </ul>
+    <div class="rightNav">
+      <input type="text" name="search" id="search">
+      <button class="btn btn-sm">Search</button>
+    </div>
+  </nav>
+  <div id="continer">
+    <div class="list" style="display: flex; flex-direction: row-reverse;width: 15%; height: 45px;">
+      <table>
+        <thead>
+          <tr>
+            <th>Top Nifty stocks</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><a href="#hdfcbank" onclick="setTicks('HDFC.BSE','EM59AG6PV9A7O843')">HDFC Bank</a></td>
+          </tr>
+          <tr>
+            <td><a href="#tatasteel" onclick="setTicks('TATASTEEL.BSE','EM59AG6PV9A7O843')">Tata Steel</a></td>
+          </tr>
+          <tr>
+            <td><a href="#reliance" onclick="setTicks('RELIANCE.BSE','EM59AG6PV9A7O843')">Reliance </a></td>
+          </tr>
+          <tr>
+            <td><a href="#sbi" onclick="setTicks('SBICARD.BSE','EM59AG6PV9A7O843')">SBI</a></td>
+          </tr>
+          <tr>
+            <td><a href="#hindalcoindustry" onclick="setTicks('HINDALCO.BSE','EM59AG6PV9A7O843')">Hindalco Ind</a></td>
+          </tr>
+          <tr>
+            <td><a href="#indianoilcorp" onclick="setTicks('IOC.BSE','EM59AG6PV9A7O843')">Indian Oil Corp</a></td>
+          </tr>
+          <tr>
+            <td><a href="#itc" onclick="setTicks('ITC.BSE','EM59AG6PV9A7O843')">ITC</a></td>
+          </tr>
+          <tr>
+            <td><a href="#bharatpetroleum" onclick="setTicks('BPCL.BSE','EM59AG6PV9A7O843')">Bharat Petro</a></td>
+          </tr>
+          <tr>
+            <td><a href="#infy" onclick="setTicks('INFY.BSE','EM59AG6PV9A7O843')">Infosys</a></td>
+          </tr>
+          <tr>
+            <td><a href="#ongc" onclick="setTicks('ONGC.BSE','EM59AG6PV9A7O843')">ONGC </a></td>
+          </tr>
+          <tr>
+            <td><a href="#wipro" onclick="setTicks('WIPRO.BSE','EM59AG6PV9A7O843')">Wipro</a></td>
+          </tr>
+          <tr>
+            <td><a href="#techmehindra" onclick="setTicks('TECHM.BSE','EM59AG6PV9A7O843')">Tech Mehindra</td>
+          </tr>
+          <tr>
+            <td><a href="#adaniport" onclick="setTicks('ADANIPORTS.BSE','EM59AG6PV9A7O843')">Adani Port</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+
+
+    <div id="tvchart" style="display: flex; flex-direction: row-reverse;width: 99%; height: 450px;"></div>
+    <form action="/buy" id="buyForm" name="buyForm" onsubmit="return validateForm();"  method="post">
+      
+      <div class="container">
+        <div class="box" id="Name">
+          <input type="text" name="equityName" id="eqityName" readonly><b><span class="error"></span></b>
+        </div>
+        <div class="box" id="Symbol">
+          <input type="symbol" name="equitySymbol" id="equitySymbol" readonly><b><span class="error"></span></b>
+        </div>
+        <div class="box" id="Price">
+          <input type="number" name="buyPrice" id="buyPrice" readonly><b><span class="error"></span></b>
+        </div>
+        <div class="box" id="quantity">
+          <input type="number" name="quantity" id="bQuantity"><b><span class="error"></span></b>
+        </div>
+        <div class="box" id="totalprice">
+          <input type="number" name="totalPrice" id="totalPrice" readonly><b><span class="error"></span></b>
+        </div>
+      </div>
+      <div class="buttons">
+        <button class="btn">Buy</button>
+        <button class="btn" id="sellButton">Sell</button>
+      </form>
+        
+      </div>
+    <!-- </form> -->
+
+    
+</body>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+<!-- <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script> -->
+
+
+<script src="https://unpkg.com/lightweight-charts@3.7.0/dist/lightweight-charts.standalone.production.js"></script>
+<script type="text/javascript" src="index.js"></script>
+
+
+<script>
+  //Pseudo code
+  //Step 1: Define chart properties.
+  //Step 2: Create the chart with defined properties and bind it to the DOM element.
+  //Step 3: Add the CandleStick Series.
+  //Step 4: Set the data and render.
+  //Step5 : Plug the socket to the chart
+
+
+  //Code
+  const log = console.log;
+
+  const chartProperties = {
+    width: 945,
+    height: 450,
+    timeScale: {
+      timeVisible: true,
+      secondsVisible: false,
+    }
+  }
+
+  // const domElement = document.getElementById('tvchart');
+  // console.log("price box data");
+  // console.log(domElement);
+  console.log
+  // const chart = LightweightCharts.createChart(domElement, chartProperties);
+  // const candleSeries = chart.addCandlestickSeries();
+
+  // let final = [];
+  let i=0;
+  
+  // console.log("price box data");
+  // console.log(priceBox);
+  let eventSource;
+  let lastEvent;
+  const domElement = document.getElementById('tvchart');
+  const chart = LightweightCharts.createChart(domElement, chartProperties);
+  const candleSeries = chart.addCandlestickSeries();
+
+
+  // let chart = LightweightCharts.createChart(domElement, chartProperties);
+  // let candleSeries = chart.addCandlestickSeries();
+
+   setTicks = (symbol, api) => {
+    // https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${symbol}&outputsize=full&apikey=${api}
+    // console.log(lastEvent);
+    
+    // i++;
+    // document.getElementBy    Id('tvchart').innerHTML = '';
+    // const domElement${i} = document.getElementById('tvchart');
+
+  // const chart${i} = LightweightCharts.createChart(domElement, chartProperties);
+  // const candleSeries${i} = chart.addCandlestickSeries();
+    // let domElement = document.getElementById('tvchart');
+    // let chart1 = LightweightCharts.createChart(domElement, chartProperties);
+    // let candleSeries = chart.addCandlestickSeries();
+    let queryURL = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${symbol}&outputsize=full&apikey=${api}`;
+    let equityName, equitySymbol;
+    console.log(queryURL);
+    fetch(queryURL)
+      .then(res => res.json())
+      .then(data => {
+        // console.log(data);
+        let keys = Object.keys(data["Time Series (Daily)"]);
+        equitySymbol = data["Meta Data"]["2. Symbol"];
+        equityName = equitySymbol.replace(".BSE", "");
+        console.log(equitySymbol);
+        let final = [];
+        keys.map((currDate) => {
+          // console.log((parseFloat(data["Time Series (Daily)"][currDate]["1. open"])).toFixed(2));
+          // console.log(data["Time Series (Daily)"][currDate]["1. open"]);
+          let singleCandle = {
+            time: currDate,
+            open: parseFloat(data["Time Series (Daily)"][currDate]["1. open"]).toFixed(2),
+            high: parseFloat(data["Time Series (Daily)"][currDate]["2. high"]).toFixed(2),
+            low: parseFloat(data["Time Series (Daily)"][currDate]["3. low"]).toFixed(2),
+            close: parseFloat(data["Time Series (Daily)"][currDate]["4. close"]).toFixed(2),
+          }
+          final.push(singleCandle);
+        });
+        // const cdata = data.map(d => {
+        //   return {time:d[0]/1000,open:parseFloat(d[1]),high:parseFloat(d[2]),low:parseFloat(d[3]),close:parseFloat(d[4])}
+        // });
+        console.log(final);
+        candleSeries.setData(final.reverse());
+        let domEquitySymbol = document.getElementById("equitySymbol");
+        let domEquityName = document.getElementById("eqityName");
+        domEquitySymbol.setAttribute("value",equitySymbol);
+        domEquityName.setAttribute("value",equityName);
+        // console.log(final[99].close);
+
+        // ["close"]);
+        // console.log(final[99]["close"]);
+        //  const 
+         eventSource = new EventSource(`http://localhost:5001/stock/${final[final.length - 1].close}`);
+          console.log(eventSource);
+          if(lastEvent)
+          {
+            lastEvent.close();
+          }
+          lastEvent = eventSource;
+        function updateMessage(message) {
+          // const list = document.getElementById('messages')
+          // const item = document.createElement('p')
+          // item.textContent = message
+          // list.appendChild(item)
+          console.log(message);
+        }
+
+        eventSource.onmessage = function (event) {
+          console.log(event.data);
+          let newCandle = {
+            time: final[final.length - 1]["time"],
+            open: final[final.length - 1]["open"],
+            high: final[final.length - 1]["high"],
+            low: final[final.length - 1]["low"],
+            close: parseFloat(event.data),
+          }
+          console.log(newCandle);
+
+          // console.log(newCandle);
+          candleSeries.update(newCandle);
+        
+          priceBox.setAttribute("value", event.data);
+
+        }
+
+        eventSource.onerror = function () {
+          console.log('Server closed connection')
+          eventSource.close()
+        }
+      })
+      .catch(err => log(err))
+    // final.reverse();
+    // console.log(final);
+    // return final;
+  }
+  // setTicks("IBM", "EM59AG6PV9A7O843");
+  setTicks("HDFC.BSE", "EM59AG6PV9A7O843")
+  const priceBox = document.getElementById('buyPrice');
+  // console.log(priceBox);
+
+  function clearErrors(){
+
+errors = document.getElementsByClassName('error');
+for(let item of errors)
+{
+    item.innerHTML = "";
+}
+}
+function seterror(id, error){
+//sets error inside tag of id 
+let element = document.getElementById(id);
+element.getElementsByClassName('error')[0].innerHTML = error;
+
+}
+
+function validateForm(){
+var returnval = true;
+clearErrors();
+console.log("inside validate");
+//perform validation and if validation fails, set the value of returnval to false
+var qty = document.forms['buyForm']["bQuantity"].value;
+console.log(qty);
+if (qty<=0){
+    seterror("bQuantity", "Quantity of equity shares bought cannot be zero");
+    returnval = false;
+    console.log(returnval);
+    console.log(returnval);
+    pause();
+}
+return returnval;
+}
+
+document.getElementById('sellButton').onclick = function() {
+  console.log("hello");
+  const sellForm = document.getElementById("buyForm");
+    sellForm.action = '/sell';
+    sellForm.submit();
+}
+
+// function pause()
+// {
+//   let i=0,j=1;
+//   if(i != j)
+//   console.log("not equal");
+// }
+
+
+
+
+// function sell()
+// {
+//   const 
+// }
+
+
+</script>
+</div>
+</html>
