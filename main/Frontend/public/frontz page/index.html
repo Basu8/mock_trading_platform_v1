@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <style>
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    .logo{
+        width: 20%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .logo img{
+        width: 33%;
+        border: 3px solid white;
+        border-radius: 50px;
+    }
+    .navbar{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: sticky;
+        top: 0;
+        cursor: pointer;
+    }
+    .nav-list{
+        width: 50;
+        display: flex;
+        align-items: center;
+    }
+    .nav-list li{
+         list-style: none;
+         padding: 26px 30px;
+    }
+    .nav-list li a{
+          text-decoration: none;
+          color: antiquewhite;
+    }
+    .nav-list li a:hover{
+        color: violet;
+    }
+    .background{
+        background: rgba(0, 0, 0, 0.7)url('./bear.jpg');
+        background-size: cover;
+        background-blend-mode: darken;
+    }
+    .firstSection{
+        height: 100vh;
+    }
+    .box-main{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: whitesmoke;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: auto;
+        max-width: 50%;
+        height: 80%;
+    }
+    .firstHalf{
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .secondHalf{
+        width: 30%;
+    }
+    .secondHalf img{
+        width: 70%;
+        border: 4px solid white;
+        border-radius: 150px;
+        display: block;
+        margin: auto;
+    }
+    .text-big{
+        font-size: 35px;
+    }
+    .text-small{
+        font-size: 18px;
+    }
+    .btn{
+        padding: 8px 20px;
+        margin: 7px 3px;
+        border: 2px solid wheat;
+        background: none;
+        color: white;
+        cursor: pointer;
+    }
+    .btn:hover{
+        color: violet;
+    }
+    
+</style>    
+    <title>Mock Trader v1</title>
+</head>
+
+<body>
+    <nav class="navbar background">
+        <ul class="nav-list">
+            <div class="logo"><img src="./stock.jpg" alt="logo"></div>
+            <li><a href="/">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#contact">Contact Us</a></li>
+        </ul>
+    </nav>
+    <section class="background firstSection">
+        <div class="box-main">
+            <div class="firstHalf">
+                <p class="text-big">Mock Trader v1</p>
+                <p class="text-small">Here you can see your investment without investing single penny!</p>
+                <div class="buttons">
+                    	<button class="btn" onclick="document.location.href='/login';">Login</button>
+			<button class="btn" onclick="document.location.href='/register';">Register</button>
+			<button class="btn" onclick="document.location.href='/dashboard';">Dashboard</button>
+                </div>
+            </div>
+            <div class="secondHalf">
+                <img src="./bearbull.jpg" alt="logo">
+            </div>
+        </div>
+    </section>
+
+</body>
+
+</html>
