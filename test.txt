@@ -1,3 +1,15 @@
 This is for testing!
 hi and hello!
 gm
+pipeline {
+    agent any
+
+    stages {
+        stage('Hello') {
+            steps {
+                echo 'Hello World'
+            }
+        }
+    }
+    emailext body: 'for ia2', subject: 'this is for testing', to: 'dasanis17@gmail.com'
+}
