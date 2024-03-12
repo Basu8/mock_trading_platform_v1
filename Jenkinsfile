@@ -1,30 +1,22 @@
 pipeline {
     agent any
 
-    stages {
-        stage('one') {
-            steps {
-                echo 'test'
-            }
-        }
-        
-stage('two') {
-            steps {
-                echo 'deploy'
-            }
-        }
-        
-stage('three') {
+     stages {
+        stage('build') {
             steps {
                 echo 'build'
             }
         }
+         stage('test') {
+            steps {
+                echo 'test'
+            }
+        }
+         stage('deploy') {
+            steps {
+                echo 'deploy'
+            }
+        }
     }
-  post
-  {
-      always
-      {
-          emailext body: 'devops', subject: 'testing', to: 'anid180@proton.me'
-      }
-  }
+
 }
