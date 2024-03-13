@@ -1,0 +1,48 @@
+git congif --global user.name
+git congif --global user.email
+
+git comfig --list
+git push origin main
+git branch -M main #change the brancgname to main specifically 
+git branch -u origin main #upstream
+git merge brnach_name
+
+git config core.autocrlf true #to remove warnings
+git commit -a -m "message"
+git add -A #to add multiple files
+git checkout branch_name
+git brnach brnach_name
+
+#ssh key gen
+eval $(ssh-agent -s)
+ssh-keygen -t rsa -b 4096 -C "emailid"
+cat /c/user/djkj/.ssh/id_rsa.pub
+ssh-add -l
+ssh -T git@github
+
+#merge conflict
+git pull demo main
+git branch f1 & f2
+#in f1
+git add . &commit change branch f2 git merge main add & commit in f2 checkout to f1 then merge main
+then checkout to main n merge f1 then f2 then mergetool
+git rebase --continue #to merge conflict remotely
+git mergetool #resolve the conflict b/w two branches
+git pull --rebase origin main --to get the file which one is occuring conflict
+git pull --rebase origin main #pull the file which is causing config in repo
+
+#base protect & hash func
+git diff #diff b/w two branches also b/w working dir n staging area
+git diff --stage #diff b/w files in staging area & git repo
+git diff head #diff b/w w_dir n repo
+git diff <brn1><brn2> #diff b/w two branches
+git diff <hash1><hash2> #to compare diff b/w two hashes.
+
+
+1. creating pushing the data to new branchpushing it and then adding the review
+And reviewer gives review then we will merge 
+
+2. creating the organization 
+i. creating the two teams 
+ii. adding members in both teams 
+iii. creating repository for each teams 
